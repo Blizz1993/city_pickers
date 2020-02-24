@@ -11,7 +11,7 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   Widget trailingWidget;
   String title;
   Color titleColor;
-  double titleSize;
+  TextStyle appBarTitleStyle;
   BorderSide borderSide;
   double leadingLeftMargin;
   double containerWidth;
@@ -21,7 +21,7 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.contentHeight = 88,
     this.navigationBarBackgroundColor,
     this.titleColor = Colors.black,
-    this.titleSize = 32.0,
+    this.appBarTitleStyle,
     this.trailingWidget,
     this.borderSide,
     this.leadingLeftMargin = 5,
@@ -73,8 +73,8 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 new Container(
                   width: widget.containerWidth,
                   child: new Text(widget.title,
-                      style: new TextStyle(
-                        fontSize: widget.titleSize,),
+                      style: widget.appBarTitleStyle ?? TextStyle(
+                        fontSize: 32.0,),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,

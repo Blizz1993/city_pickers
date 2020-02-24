@@ -314,9 +314,11 @@ class _FullPageState extends State<FullPage> {
             title: Text(_getHeadTitle()),
           ) : CustomAppbar(
             title: _getHeadTitle(),
+            navigationBarBackgroundColor: Colors.white,
             leadingWidget: widget.myCustomDesign['returnButton'],
             leadingLeftMargin: widget.myCustomDesign['leadingLeftMargin'],
             containerWidth: widget.myCustomDesign['containerWidth'],
+            appBarTitleStyle: widget.myCustomDesign['appBarTitleStyle'],
           ),
           body: SafeArea(
               bottom: true,
@@ -345,33 +347,72 @@ class ListWidget extends StatelessWidget {
     return ListView.builder(
       controller: controller,
       itemBuilder: (BuildContext context, int index) {
-        Point item = itemList[index];
-        return Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(color: theme.dividerColor, width: 1.0))),
-          child: ListTileTheme(
-            child: ListTile(
-              title: myCustomDesign == null ? Text(item.name) : Text(item.name, style: myCustomDesign['titleStyle']),
-              // item 标题
-              dense: true,
-              // item 直观感受是整体大小
-              trailing: selectedId == item.code
-                  ? Icon(Icons.check, color: myCustomDesign == null ? theme.primaryColor : myCustomDesign['checkColor'])
-                  : null,
-              contentPadding: myCustomDesign == null ? EdgeInsets.fromLTRB(24.0, .0, 24.0, 3.0) : myCustomDesign['contentPadding'],
-              // item 内容内边距
-              enabled: true,
-              onTap: () {
-                onSelect(itemList[index]);
-              },
-              // item onTap 点击事件
-              onLongPress: () {},
-              // item onLongPress 长按事件
-              selected: selectedId == item.code, // item 是否选中状态
+      Point item = itemList[index];
+      return GestureDetector(
+        onTap: () {
+            onSelect(itemList[index]);
+        },
+        child: Container(
+          width: myCustomDesign['itemWidth'],
+          height: myCustomDesign['itemHeight'],
+          color: myCustomDesign['itemColor'],
+          child: Row(
+            children: <Widget>[
+              myCustomDesign['placeWidget'],
+              Expanded(
+                child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom:myCustomDesign['itemBorderSide'],
+                      )
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: myCustomDesign['itemTextPadding'],
+                          child: myCustomDesign == null ? Text(item.name) : Text(item.name, style: myCustomDesign['titleStyle']),
+                        ),
+                        Expanded(child: Container()),
+                        Padding(
+                          padding: myCustomDesign['checkPadding'],
+                          child: selectedId == item.code
+                          ? Icon(Icons.check, color: myCustomDesign == null ? theme.primaryColor : myCustomDesign['checkColor'])
+                          : null,
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+              ]
             ),
           ),
         );
+        // return Container(
+        //   decoration: BoxDecoration(
+        //       border: Border(
+        //           bottom: BorderSide(color: theme.dividerColor, width: 1.0))),
+        //   child: ListTileTheme(
+        //     child: ListTile(
+        //       title: myCustomDesign == null ? Text(item.name) : Text(item.name, style: myCustomDesign['titleStyle']),
+        //       // item 标题
+        //       dense: true,
+        //       // item 直观感受是整体大小
+        //       trailing: selectedId == item.code
+        //           ? Icon(Icons.check, color: myCustomDesign == null ? theme.primaryColor : myCustomDesign['checkColor'])
+        //           : null,
+        //       contentPadding: myCustomDesign == null ? EdgeInsets.fromLTRB(24.0, .0, 24.0, 3.0) : myCustomDesign['contentPadding'],
+        //       // item 内容内边距
+        //       enabled: true,
+        //       onTap: () {
+        //         onSelect(itemList[index]);
+        //       },
+        //       // item onTap 点击事件
+        //       onLongPress: () {},
+        //       // item onLongPress 长按事件
+        //       selected: selectedId == item.code, // item 是否选中状态
+        //     ),
+        //   ),
+        // );
       },
       itemCount: itemList.length,
     );
