@@ -327,6 +327,7 @@ class _FullPageState extends State<FullPage> {
                 controller: scrollController,
                 onSelect: _onItemSelect,
                 selectedId: _getSelectedId(),
+                myCustomDesign: widget.myCustomDesign,
               ))),
     );
   }
