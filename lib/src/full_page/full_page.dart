@@ -359,7 +359,7 @@ class ListWidget extends StatelessWidget {
               trailing: selectedId == item.code
                   ? Icon(Icons.check, color: myCustomDesign == null ? theme.primaryColor : myCustomDesign['checkColor'])
                   : null,
-              contentPadding: EdgeInsets.fromLTRB(24.0, .0, 24.0, 3.0),
+              contentPadding: myCustomDesign == null ? EdgeInsets.fromLTRB(24.0, .0, 24.0, 3.0) : myCustomDesign['contentPadding'],
               // item 内容内边距
               enabled: true,
               onTap: () {
